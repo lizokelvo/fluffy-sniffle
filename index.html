@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма – Бронирования</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5d9ff, #e0b0ff);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(148, 85, 211, 0.3);
+            padding: 30px;
+        }
+        h1 {
+            color: #8a2be2;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #d8bfd8;
+        }
+        .section-title {
+            color: #9370db;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #d8bfd8;
+            border-radius: 8px;
+            background: #faf0ff;
+        }
+        .radio-group, .checkbox-group {
+            margin: 10px 0;
+        }
+        .radio-group label, .checkbox-group label {
+            margin-left: 8px;
+            color: #6a5acd;
+        }
+        button {
+            background: linear-gradient(90deg, #9932cc, #da70d6);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #8a2be2, #ee82ee);
+            transform: translateY(-2px);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #9370db;
+            font-size: 14px;
+        }
+        .checkbox-small {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✈️ Форма – Бронирования билетов</h1>
+
+        <!-- 1. Персональные данные -->
+        <div class="section">
+            <div class="section-title">1. Персональные данные</div>
+            <input type="text" placeholder="ФИО" required>
+            <input type="text" placeholder="Серия и номер паспорта" required>
+            <input type="date" placeholder="Дата рождения" required>
+            <input type="tel" placeholder="Контактный телефон" required>
+            <input type="email" placeholder="E-mail" required>
+        </div>
+
+        <!-- 2. Класс обслуживания -->
+        <div class="section">
+            <div class="section-title">2. Класс обслуживания</div>
+            <div class="radio-group">
+                <input type="radio" id="economy" name="class" checked>
+                <label for="economy">Эконом</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="comfort" name="class">
+                <label for="comfort">Комфорт</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="business" name="class">
+                <label for="business">Бизнес</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="first-class" name="class">
+                <label for="first-class">Первый класс</label>
+            </div>
+        </div>
+
+        <!-- 3. Дополнительные услуги -->
+        <div class="section">
+            <div class="section-title">3. Дополнительные услуги</div>
+            <h4>Багаж</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="baggage-hand" class="checkbox-small">
+                <label for="baggage-hand">Ручная кладь (до 10 кг) – бесплатно</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="baggage-23" class="checkbox-small">
+                <label for="baggage-23">Доп. багаж (до 23 кг) – 1 500 ₽</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="baggage-32" class="checkbox-small">
+                <label for="baggage-32">Доп. багаж (до 32 кг) – 3 000 ₽</label>
+            </div>
+
+            <h4>Страховка</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="insurance-standard" class="checkbox-small">
+                <label for="insurance-standard">Стандартная – 500 ₽</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="insurance-premium" class="checkbox-small">
+                <label for="insurance-premium">Расширенная – 1 200 ₽</label>
+            </div>
+
+            <h4>Питание на борту</h4>
+            <div class="checkbox-group">
+                <input type="checkbox" id="meal-none" class="checkbox-small">
+                <label for="meal-none">Без питания</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="meal-standard" class="checkbox-small">
+                <label for="meal-standard">Стандартное – 800 ₽</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="meal-premium" class="checkbox-small">
+                <label for="meal-premium">Премиум – 1 500 ₽</label>
+            </div>
+        </div>
+
+        <!-- 4. Способ оплаты -->
+        <div class="section">
+            <div class="section-title">4. Способ оплаты</div>
+            <div class="radio-group">
+                <input type="radio" id="card" name="payment" checked>
+                <label for="card">Банковская карта (Visa/Mastercard)</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="sbp" name="payment">
+                <label for="sbp">СБП (Система быстрых платежей)</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="ewallet" name="payment">
+                <label for="ewallet">Электронные кошельки (Qiwi, WebMoney)</label>
+            </div>
+        </div>
+
+        <!-- Соглашения -->
+        <div class="checkbox-group">
+            <input type="checkbox" id="agreement" required>
+            <label for="agreement">✅ Я согласен на обработку персональных данных</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="newsletter">
+            <label for="newsletter">Подписаться на спецпредложения</label>
+        </div>
+
+        <!-- Кнопка бронирования -->
+        <button type="submit">Забронировать</button>
+
+        <div class="footer">
+            Метопоиск – удобный поиск и бронирование билетов.<br>
+            © 2024 Все права защищены.
+        </div>
+    </div>
+</body>
+</html>
