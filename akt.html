@@ -2,71 +2,254 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Акт возврата билета</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Возврат билета</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f9f0ff;
-            color: #4b0082;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5d9ff, #e0b0ff);
+            margin: 0;
             padding: 20px;
+            color: #333;
         }
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(147, 112, 219, 0.2);
+            box-shadow: 0 10px 30px rgba(148, 85, 211, 0.3);
+            padding: 30px;
         }
         h1 {
             color: #8a2be2;
             text-align: center;
+            margin-bottom: 25px;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px dashed #d8bfd8;
-            padding-bottom: 15px;
         }
-        .signature {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
+        .section-title {
+            color: #9370db;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #d8bfd8;
+            border-radius: 8px;
+            background: #faf0ff;
+        }
+        .radio-group, .checkbox-group {
+            margin: 10px 0;
+        }
+        .radio-group label, .checkbox-group label {
+            margin-left: 8px;
+            color: #6a5acd;
+        }
+        button {
+            background: linear-gradient(90deg, #9932cc, #da70d6);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #8a2be2, #ee82ee);
+            transform: translateY(-2px);
+        }
+        .download-btn {
+            background: linear-gradient(90deg, #6a5acd, #9370db);
+            margin-top: 10px;
         }
         .footer {
             text-align: center;
             margin-top: 20px;
-            font-size: 12px;
             color: #9370db;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="index.html">Форма бронирования</a></li>
+            <li><a href="akt.html" class="active">Акт возврата билетов </a></li>
+            <li><a href="finotch.html">Ежедневный финансовый отчет </a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
     <div class="container">
-        <h1>Акт возврата авиабилета</h1>
-        
+        <h1>✈️ Акт возврата авиабилета</h1>
+
+        <!-- 1. Данные пассажира -->
         <div class="section">
-            <h3>1. Данные пассажира</h3>
-            <p>ФИО: ___________________________</p>
-            <p>Номер билета: ___________________</p>
-            <p>Рейс: _______ (№ ______)</p>
-            <p>Дата вылета: ___________________</p>
-            <p>Маршрут: ________ → ________</p>
+            <div class="section-title">1. Данные пассажира</div>
+            <input type="text" id="passengerName" placeholder="ФИО" required>
+            <input type="text" id="ticketNumber" placeholder="Номер билета" required>
+            <input type="text" id="flightNumber" placeholder="Рейс (например: SU 1234)" required>
+            <input type="date" id="flightDate" placeholder="Дата вылета" required>
+            <input type="text" id="route" placeholder="Маршрут (например: Москва → Сочи)" required>
         </div>
-        
-        <!-- Остальные разделы аналогично текстовой версии -->
-        
-        <div class="signature">
-            <div>
-                <p>Пассажир: _________ / Дата: ___</p>
+
+        <!-- 2. Причина возврата -->
+        <div class="section">
+            <div class="section-title">2. Причина возврата</div>
+            <div class="radio-group">
+                <input type="radio" name="reason" id="reason1" value="Отмена рейса авиакомпанией" checked>
+                <label for="reason1">Отмена рейса авиакомпанией</label>
             </div>
-            <div>
-                <p>Представитель: _________ / Дата: ___</p>
+            <div class="radio-group">
+                <input type="radio" name="reason" id="reason2" value="Изменение расписания">
+                <label for="reason2">Изменение расписания</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" name="reason" id="reason3" value="Болезнь пассажира">
+                <label for="reason3">Болезнь пассажира (приложить справку)</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" name="reason" id="reason4" value="Личные обстоятельства">
+                <label for="reason4">Личные обстоятельства</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" name="reason" id="reason5" value="Другое">
+                <label for="reason5">Другое: </label>
+                <input type="text" id="otherReason" placeholder="Укажите причину" style="width: 70%; margin-left: 25px;">
             </div>
         </div>
-        
+
+        <!-- 3. Способ компенсации -->
+        <div class="section">
+            <div class="section-title">3. Способ компенсации</div>
+            <div class="radio-group">
+                <input type="radio" name="compensation" id="comp1" value="Возврат денежных средств на карту" checked>
+                <label for="comp1">Возврат денежных средств на карту</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" name="compensation" id="comp2" value="Электронный сертификат авиакомпании">
+                <label for="comp2">Электронный сертификат авиакомпании</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" name="compensation" id="comp3" value="Переоформление на другую дату">
+                <label for="comp3">Переоформление на другую дату</label>
+            </div>
+        </div>
+
+        <!-- 4. Расчет суммы возврата -->
+        <div class="section">
+            <div class="section-title">4. Расчет суммы возврата</div>
+            <input type="number" id="ticketPrice" placeholder="Стоимость билета (руб)" required>
+            <input type="number" id="fee" placeholder="Удержано сборов (руб)" required>
+            <input type="number" id="refundAmount" placeholder="К возврату (руб)" readonly>
+        </div>
+
+        <!-- Кнопки -->
+        <button onclick="calculateRefund()">Рассчитать возврат</button>
+        <button class="download-btn" onclick="generateWordDoc()">Скачать акт в Word</button>
+
         <div class="footer">
-            Метопоиск – помощь в оформлении возвратов
+            Метопоиск – помощь в оформлении возвратов<br>
+            © 2024 Все права защищены.
         </div>
     </div>
+
+    <script>
+        function calculateRefund() {
+            const ticketPrice = parseFloat(document.getElementById('ticketPrice').value) || 0;
+            const fee = parseFloat(document.getElementById('fee').value) || 0;
+            const refundAmount = ticketPrice - fee;
+            document.getElementById('refundAmount').value = refundAmount.toFixed(2);
+            alert(`К возврату: ${refundAmount.toFixed(2)} руб.`);
+        }
+
+        function generateWordDoc() {
+            // Собираем данные из формы
+            const passengerName = document.getElementById('passengerName').value;
+            const ticketNumber = document.getElementById('ticketNumber').value;
+            const flightNumber = document.getElementById('flightNumber').value;
+            const flightDate = document.getElementById('flightDate').value;
+            const route = document.getElementById('route').value;
+            const reason = document.querySelector('input[name="reason"]:checked').value;
+            const compensation = document.querySelector('input[name="compensation"]:checked').value;
+            const refundAmount = document.getElementById('refundAmount').value;
+
+            // Формируем HTML для Word-документа
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Акт возврата авиабилета</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 2cm; }
+                        h1 { color: #8a2be2; text-align: center; }
+                        .section { margin-bottom: 20px; }
+                        .signature { display: flex; justify-content: space-between; margin-top: 50px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Акт возврата авиабилета</h1>
+                    
+                    <div class="section">
+                        <h3>1. Данные пассажира</h3>
+                        <p>ФИО: ${passengerName}</p>
+                        <p>Номер билета: ${ticketNumber}</p>
+                        <p>Рейс: ${flightNumber}</p>
+                        <p>Дата вылета: ${flightDate}</p>
+                        <p>Маршрут: ${route}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>2. Причина возврата</h3>
+                        <p>${reason}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>3. Способ компенсации</h3>
+                        <p>${compensation}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3>4. Расчет суммы возврата</h3>
+                        <p>К возврату: ${refundAmount} руб.</p>
+                    </div>
+                    
+                    <div class="signature">
+                        <div>
+                            <p>Пассажир: _________________ / Дата: ___</p>
+                        </div>
+                        <div>
+                            <p>Представитель: _________________ / Дата: ___</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            // Создаем Blob и ссылку для скачивания
+            const blob = new Blob([htmlContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Акт_возврата_${passengerName}.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
 </body>
 </html>
