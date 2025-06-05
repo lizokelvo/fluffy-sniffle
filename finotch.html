@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовый отчет</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5d9ff, #e0b0ff);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(148, 85, 211, 0.3);
+            padding: 30px;
+        }
+        h1 {
+            color: #8a2be2;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #d8bfd8;
+        }
+        .section-title {
+            color: #9370db;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #d8bfd8;
+            border-radius: 8px;
+            background: #faf0ff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #d8bfd8;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #e6e6fa;
+        }
+        button {
+            background: linear-gradient(90deg, #9932cc, #da70d6);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #8a2be2, #ee82ee);
+            transform: translateY(-2px);
+        }
+        .download-btn {
+            background: linear-gradient(90deg, #6a5acd, #9370db);
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #9370db;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="index.html">Форма бронирования</a></li>
+            <li><a href="akt.html">Акт возврата билетов </a></li>
+            <li><a href="finotch.html" class="active">Ежедневный финансовый отчет </a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+    <div class="container">
+        <h1>📊 Ежедневный финансовый отчет</h1>
+
+        <!-- 1. Основная информация -->
+        <div class="section">
+            <div class="section-title">1. Основная информация</div>
+            <input type="date" id="reportDate" required>
+            <input type="text" id="managerName" placeholder="Ответственный менеджер" required>
+            <textarea id="comments" placeholder="Комментарии" rows="3"></textarea>
+        </div>
+
+        <!-- 2. Доходы -->
+        <div class="section">
+            <div class="section-title">2. Доходы</div>
+            <table id="incomeTable">
+                <thead>
+                    <tr>
+                        <th>Источник</th>
+                        <th>Сумма (руб)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="Например: Продажа билетов" class="table-input"></td>
+                        <td><input type="number" placeholder="0" class="table-input"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Доп. услуги" class="table-input"></td>
+                        <td><input type="number" placeholder="0" class="table-input"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" onclick="addRow('incomeTable')">+ Добавить строку</button>
+            <p><strong>Итого доходов: <span id="totalIncome">0</span> руб.</strong></p>
+        </div>
+
+        <!-- 3. Расходы -->
+        <div class="section">
+            <div class="section-title">3. Расходы</div>
+            <table id="expensesTable">
+                <thead>
+                    <tr>
+                        <th>Статья расходов</th>
+                        <th>Сумма (руб)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" placeholder="Например: Комиссия банка" class="table-input"></td>
+                        <td><input type="number" placeholder="0" class="table-input"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="Реклама" class="table-input"></td>
+                        <td><input type="number" placeholder="0" class="table-input"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" onclick="addRow('expensesTable')">+ Добавить строку</button>
+            <p><strong>Итого расходов: <span id="totalExpenses">0</span> руб.</strong></p>
+        </div>
+
+        <!-- 4. Итоги -->
+        <div class="section">
+            <div class="section-title">4. Итоги</div>
+            <p>Чистая прибыль: <span id="netProfit">0</span> руб.</p>
+            <canvas id="profitChart" width="400" height="200" style="margin: 20px 0;"></canvas>
+        </div>
+
+        <!-- Кнопки -->
+        <button onclick="calculateTotals()">Пересчитать</button>
+        <button class="download-btn" onclick="generateFinancialReport()">Скачать отчет в Word</button>
+
+        <div class="footer">
+            Метопоиск – автоматизация финансовой отчетности<br>
+            © 2024 Все права защищены.
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Добавление строк в таблицу
+        function addRow(tableId) {
+            const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="Введите название" class="table-input"></td>
+                <td><input type="number" placeholder="0" class="table-input"></td>
+            `;
+        }
+
+        // Расчет итогов
+        function calculateTotals() {
+            // Доходы
+            let incomeTotal = 0;
+            const incomeRows = document.querySelectorAll('#incomeTable tbody tr');
+            incomeRows.forEach(row => {
+                const amount = parseFloat(row.querySelector('td:nth-child(2) input').value) || 0;
+                incomeTotal += amount;
+            });
+            document.getElementById('totalIncome').textContent = incomeTotal.toFixed(2);
+
+            // Расходы
+            let expensesTotal = 0;
+            const expensesRows = document.querySelectorAll('#expensesTable tbody tr');
+            expensesRows.forEach(row => {
+                const amount = parseFloat(row.querySelector('td:nth-child(2) input').value) || 0;
+                expensesTotal += amount;
+            });
+            document.getElementById('totalExpenses').textContent = expensesTotal.toFixed(2);
+
+            // Чистая прибыль
+            const netProfit = incomeTotal - expensesTotal;
+            document.getElementById('netProfit').textContent = netProfit.toFixed(2);
+
+            // Обновление графика
+            updateChart(incomeTotal, expensesTotal);
+        }
+
+        // График
+        let profitChart;
+        function updateChart(income, expenses) {
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            
+            if (profitChart) {
+                profitChart.destroy();
+            }
+            
+            profitChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Доходы', 'Расходы', 'Прибыль'],
+                    datasets: [{
+                        label: 'Финансы (руб)',
+                        data: [income, expenses, income - expenses],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Генерация Word-документа
+        function generateFinancialReport() {
+            const reportDate = document.getElementById('reportDate').value;
+            const managerName = document.getElementById('managerName').value;
+            const comments = document.getElementById('comments').value;
+            const totalIncome = document.getElementById('totalIncome').textContent;
+            const totalExpenses = document.getElementById('totalExpenses').textContent;
+            const netProfit = document.getElementById('netProfit').textContent;
+
+            // Собираем данные из таблиц
+            let incomeRowsHtml = '';
+            document.querySelectorAll('#incomeTable tbody tr').forEach(row => {
+                const source = row.querySelector('td:nth-child(1) input').value || '-';
+                const amount = row.querySelector('td:nth-child(2) input').value || '0';
+                incomeRowsHtml += `<tr><td>${source}</td><td>${amount} руб.</td></tr>`;
+            });
+
+            let expensesRowsHtml = '';
+            document.querySelectorAll('#expensesTable tbody tr').forEach(row => {
+                const category = row.querySelector('td:nth-child(1) input').value || '-';
+                const amount = row.querySelector('td:nth-child(2) input').value || '0';
+                expensesRowsHtml += `<tr><td>${category}</td><td>${amount} руб.</td></tr>`;
+            });
+
+            // Формируем HTML для Word
+            const htmlContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Финансовый отчет ${reportDate}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 2cm; }
+                        h1 { color: #8a2be2; }
+                        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                        th { background-color: #f2f2f2; }
+                        .totals { margin-top: 20px; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Ежедневный финансовый отчет</h1>
+                    <p><strong>Дата:</strong> ${reportDate}</p>
+                    <p><strong>Менеджер:</strong> ${managerName}</p>
+                    
+                    <h3>1. Доходы</h3>
+                    <table>
+                        <tr><th>Источник</th><th>Сумма</th></tr>
+                        ${incomeRowsHtml}
+                        <tr><td><strong>Итого</strong></td><td><strong>${totalIncome} руб.</strong></td></tr>
+                    </table>
+                    
+                    <h3>2. Расходы</h3>
+                    <table>
+                        <tr><th>Статья расходов</th><th>Сумма</th></tr>
+                        ${expensesRowsHtml}
+                        <tr><td><strong>Итого</strong></td><td><strong>${totalExpenses} руб.</strong></td></tr>
+                    </table>
+                    
+                    <div class="totals">
+                        <h3>3. Итоги</h3>
+                        <p>Чистая прибыль: ${netProfit} руб.</p>
+                    </div>
+                    
+                    <p><strong>Комментарии:</strong> ${comments || 'нет'}</p>
+                </body>
+                </html>
+            `;
+
+            // Создаем и скачиваем документ
+            const blob = new Blob([htmlContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Финансовый_отчет_${reportDate}.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Инициализация графика при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            updateChart(0, 0);
+            document.getElementById('reportDate').valueAsDate = new Date();
+        });
+    </script>
+</body>
+</html>
